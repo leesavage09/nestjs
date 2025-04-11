@@ -1,4 +1,4 @@
-name: nestjs-app
+name: nestjs
 
 services:
   app:
