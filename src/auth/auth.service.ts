@@ -19,9 +19,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  validateUser(credentials: UserCredentials): PublicUser | null {
+  validateUserCredentials(credentials: UserCredentials): PublicUser | null {
     const user = this.usersService.findOne(credentials.username);
     if (user && user.password === credentials.password) {
+      //TODO replace with bcrypt
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;
