@@ -3,6 +3,8 @@ import { AppService } from './app.service';
 import { PublicUser } from './users/users.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { DecodedJwt } from './auth/jwt.strategy';
 
 @Controller()
 export class AppController {
@@ -29,5 +31,11 @@ export class AppController {
     console.log({ function: !!req.logout });
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     return req.logout();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req: Request & { user: DecodedJwt }) {
+    return req.user;
   }
 }

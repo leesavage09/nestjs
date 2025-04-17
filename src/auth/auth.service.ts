@@ -6,6 +6,12 @@ import {
 } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 
+export type userJWT = {
+  userId: number;
+  username: string;
+  access_token: string;
+};
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -24,7 +30,7 @@ export class AuthService {
     return null;
   }
 
-  login(user: PublicUser) {
+  login(user: PublicUser): userJWT {
     return {
       userId: user.userId,
       username: user.username,
