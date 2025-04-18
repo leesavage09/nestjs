@@ -23,19 +23,17 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Public()
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   login(@Request() req: Request & { user: PublicUser }) {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(LocalAuthGuard)
+  @Public()
   @Post('auth/logout')
-  logout(@Request() req: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    console.log({ function: !!req.logout });
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    return req.logout();
+  logout() {
+    return 'TODO Remove JWT from cookie';
   }
 
   @UseGuards(JwtAuthGuard)
