@@ -19,8 +19,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  validateUserCredentials(credentials: UserCredentials): PublicUser | null {
-    const user = this.usersService.findOne(credentials.username);
+  async validateUserCredentials(credentials: UserCredentials) {
+    const user = await this.usersService.findOne(credentials.username);
     if (user && user.password === credentials.password) {
       //TODO replace with bcrypt
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
