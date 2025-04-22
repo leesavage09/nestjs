@@ -18,13 +18,17 @@ FROM node:22-alpine AS runtime
 
 WORKDIR /app
 
+#required for production install
 COPY package*.json ./
+#required for start:prod
+COPY --from=build /app/dist ./dist
+#required for prisma
+COPY --from=build /app/generated ./generated
+#required for prisma migrate deploy
+COPY prisma ./prisma
 
 RUN npm install --production
-
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/generated ./generated
-
+RUN npx prisma migrate deploy
 
 EXPOSE 80
 
