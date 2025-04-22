@@ -6,12 +6,13 @@ on:
       - master
 
 jobs:
-  build:
+  nest-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Install Heroku CLI
         run: |
+          mv Dockerfile.prod Dockerfile
           curl https://cli-assets.heroku.com/install.sh | sh
       - uses: akhileshns/heroku-deploy@v3.14.15
         with:
