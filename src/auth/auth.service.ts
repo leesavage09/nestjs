@@ -5,6 +5,7 @@ import {
   UserCredentials,
 } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 export type userJWT = {
   userId: number;
@@ -21,11 +22,9 @@ export class AuthService {
 
   async validateUserCredentials(credentials: UserCredentials) {
     const user = await this.usersService.findOne(credentials.username);
-    if (user && user.password === credentials.password) {
-      //TODO replace with bcrypt
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...result } = user;
-      return result;
+
+    if (!!user && (await bcrypt.compare(credentials.password, user.password))) {
+      return { id: user.id, username: user.username };
     }
 
     return null;
