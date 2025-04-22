@@ -23,6 +23,8 @@ COPY package*.json ./
 RUN npm install --production
 
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/generated ./generated
+
 
 EXPOSE 80
 
